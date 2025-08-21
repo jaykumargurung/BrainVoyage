@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainVoyage - Interactive Quiz Game</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">BrainVoyage</h1>
+            <p class="subtitle">Embark on a journey of knowledge!</p>
+        </div>
+        
+        <!-- Subject Selection Screen -->
+        <div class="subject-selection" id="subject-selection">
+            <div class="subject-category">
+                <h2 class="category-title">Academic Subjects</h2>
+                <div class="subject-grid">
+                    <button class="subject-btn" data-subject="math">Mathematics</button>
+                    <button class="subject-btn" data-subject="physics">Physics</button>
+                    <button class="subject-btn" data-subject="chemistry">Chemistry</button>
+                    <button class="subject-btn" data-subject="biology">Biology</button>
+                    <button class="subject-btn" data-subject="accountancy">Accountancy</button>
+                    <button class="subject-btn" data-subject="business">Business Studies</button>
+                    <button class="subject-btn" data-subject="economics">Economics</button>
+                    <button class="subject-btn" data-subject="social-science">Social Science</button>
+                    <button class="subject-btn" data-subject="geography">Geography</button>
+                    <button class="subject-btn" data-subject="history">History</button>
+                    <button class="subject-btn" data-subject="psychology">Psychology</button>
+                    <button class="subject-btn" data-subject="physical-education">Physical Education</button>
+                    <button class="subject-btn" data-subject="english">English</button>
+                    <button class="subject-btn" data-subject="hindi">Hindi</button>
+                    <button class="subject-btn" data-subject="general-knowledge">General Knowledge</button>
+                    <button class="subject-btn" data-subject="environmental-studies">Environmental Studies</button>
+                </div>
+            </div>
+            
+            <div class="subject-category">
+                <h2 class="category-title">Tech & Modern Subjects</h2>
+                <div class="subject-grid">
+                    <button class="subject-btn" data-subject="ai">Artificial Intelligence</button>
+                    <button class="subject-btn" data-subject="ip">Intellectual Property</button>
+                    <button class="subject-btn" data-subject="computer-science">Computer Science</button>
+                    <button class="subject-btn" data-subject="tech">Technology</button>
+                    <button class="subject-btn" data-subject="sports">Sports</button>
+                    <button class="subject-btn" data-subject="robotics">Robotics</button>
+                    <button class="subject-btn" data-subject="information-technology">Information Technology</button>
+                </div>
+            </div>
+            
+            <button class="btn" id="start-quiz-btn" disabled>Start Quiz <i class="fas fa-play"></i></button>
+        </div>
+        
+        <!-- Quiz Screen (Initially Hidden) -->
+        <div id="quiz-screen" style="display: none;">
+            <div class="score-container">
+                Score: <div class="score">0</div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+            </div>
+            
+            <div class="question-container">
+                <p class="question"></p>
+            </div>
+            
+            <div class="options-container"></div>
+            
+            <div class="feedback"></div>
+            
+            <div class="controls">
+                <button class="btn" id="next-btn">Next Question <i class="fas fa-arrow-right"></i></button>
+            </div>
+            
+            <div class="timer">Time: <span id="time">15</span>s</div>
+        </div>
+
+        <!-- Completion Popup (Initially Hidden) -->
+        <div class="completion-popup" id="completion-popup">
+            <div class="popup-content">
+                <div class="celebrate">🎉</div>
+                <h2 class="completed-title">Quiz Completed!</h2>
+                <p class="final-score">Your final score: <span id="final-score">0</span>/<span id="total-questions">0</span></p>
+                <div class="popup-buttons">
+                    <button class="btn" id="restart-btn">Start Again <i class="fas fa-redo"></i></button>
+                    <button class="btn" id="change-subject-btn">Change Subject <i class="fas fa-exchange-alt"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sound Elements -->
+    <audio id="click-sound" preload="auto">
+        <source src="data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFTb25vdGhlcXVeLm9yZwBURU5DAAAAHQAAA1N3aXRjaCBQbHVzIMKpIE5DSCBTb2Z0d2FyZQBUSVQyAAAABgAAAzIyMzUAVFNTRQAAAA8AAANMYXZmNTcuODMuMTAwAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV" type="audio/mpeg">
+    </audio>
+    <audio id="celebration-sound" preload="auto">
+        <source src="data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFTb25vdGhlcXVlLm9yZwBURU5DAAAAHQAAA1N3aXRjaCBQbHVzIMKpIE5DSCBTb2Z0d2FyZQBUSVQyAAAABgAAAzIyMzUAVFNTRQAAAA8AAANMYXZmNTcuODMuMTAwAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV" type="audio/mpeg">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
